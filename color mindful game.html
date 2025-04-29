@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flow State: Zen Watercolor Puzzles</title>
+    <style>
+        /* Main styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            overflow: hidden;
+            background-color: #f5f5f5;
+            touch-action: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+        
+        #gameCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/png;base64,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');
+            background-size: 100px 100px;
+            background-color: #f9f7f1;
+            cursor: none;
+        }
+        
+        /* UI Elements */
+        .ui-container {
+            position: absolute;
+            width: 100%;
+            padding: 20px;
+            z-index: 100;
+            pointer-events: none;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            opacity: 0.8;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            color: #333;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            z-index: 200;
+            pointer-events: auto;
+        }
+        
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+        }
+        
+        .instructions-panel {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            z-index: 300;
+            text-align: left;
+            pointer-events: auto;
+            display: none;
+        }
+        
+        .instructions-panel h2 {
+            margin-bottom: 15px;
+            color: #38757a;
+        }
+        
+        .instructions-panel p {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .instructions-panel ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .instructions-panel button {
+            background: #38757a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .help-button {
+            pointer-events: auto;
+        }
+        
+        .title {
+            color: #333;
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .control-btn {
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 1.5s ease, transform 0.3s ease;
+            pointer-events: auto;
+        }
+        
+        .control-btn:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .color-palette {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            pointer-events: auto;
+        }
+        
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid white;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .color-option:hover {
+            transform: scale(1.2);
+        }
+        
+        .color-option.active {
+            transform: scale(1.2);
+            box-shadow: 0 0 0 2px white, 0 0 0 4px currentColor;
+        }
+        
+        .intro-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(249, 247, 241, 0.95);
+            z-index: 200;
+            text-align: center;
+            opacity: 1;
+            transition: opacity 1s ease;
+            pointer-events: auto;
+        }
+        
+        .intro-title {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 300;
+            letter-spacing: 3px;
+        }
+        
+        .intro-subtitle {
+            font-size: 18px;
+            margin-bottom: 40px;
+            color: #666;
+            max-width: 80%;
+            line-height: 1.6;
+        }
+        
+        .start-btn {
+            padding: 12px 30px;
+            background: #418fde;
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+            box-shadow: 0 4px 12px rgba(65, 143, 222, 0.3);
+        }
+        
+        .start-btn:hover {
+            transform: scale(1.05);
+            background: #3a80c7;
+        }
+        
+        .instructions {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            padding: 12px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            pointer-events: none;
+        }
+        
+        .instruction-text {
+            color: #333;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .level-complete {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(249, 247, 241, 0.8);
+            z-index: 150;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
+        }
+        
+        .complete-title {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 300;
+        }
+        
+        .artwork {
+            width: 300px;
+            height: 300px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            background: white;
+            overflow: hidden;
+        }
+        
+        .next-btn {
+            padding: 12px 30px;
+            background: #418fde;
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+            box-shadow: 0 4px 12px rgba(65, 143, 222, 0.3);
+            pointer-events: auto;
+        }
+        
+        .next-btn:hover {
+            transform: scale(1.05);
+            background: #3a80c7;
+        }
+        
+        .cursor-circle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 110;
+            opacity: 0.7;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        
+        .breathing-guide {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 90;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
+        }
+        
+        .breathing-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            animation: breathe 8s infinite ease-in-out;
+        }
+        
+        @keyframes breathe {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+        
+        .level-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            padding: 8px 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+        
+        .level-text {
+            color: #333;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .intro-title {
+                font-size: 28px;
+            }
+            
+            .intro-subtitle {
+                font-size: 16px;
+            }
+            
+            .color-palette {
+                bottom: 20px;
+            }
+            
+            .instructions {
+                bottom: 80px;
+            }
+            
+            .color-option {
+                width: 25px;
+                height: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+    
+    <a href="index.html" class="back-button">← Back to Home</a>
+    
+    <div class="instructions-panel" id="instructionsPanel">
+        <h2>Flow State: How to Play</h2>
+        <p>Welcome to a mindful coloring journey where your touch creates flowing patterns of color and calm.</p>
+        <h3>Instructions:</h3>
+        <ul>
+            <li><strong>Touch & Hold</strong> - Press anywhere to create a source of flowing color</li>
+            <li><strong>Move</strong> - Swipe to direct the flow of colors across the canvas</li>
+            <li><strong>Colors</strong> - Tap the palette at the bottom to change colors</li>
+            <li><strong>Breathe</strong> - Follow the breathing guide to find your rhythm</li>
+            <li><strong>Goals</strong> - Each level has unique goals to achieve</li>
+        </ul>
+        <p>There's no right or wrong way to play. Focus on your breath, enjoy the colors, and find your flow state.</p>
+        <p>Use the help button (?) any time to see these instructions again.</p>
+        <button onclick="document.getElementById('instructionsPanel').style.display='none';">Start Playing</button>
+    </div>
+    
+    <div class="ui-container">
+        <div class="header">
+            <h1 class="title">Flow State</h1>
+            <div class="controls">
+                <div class="help-button" onclick="showInstructions()">?</div>
+                <button class="control-btn" id="resetBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                        <path d="M21 3v5h-5"></path>
+                        <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                        <path d="M3 21v-5h5"></path>
+                    </svg>
+                </button>
+                <button class="control-btn" id="helpBtn" onclick="toggleHelp()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <p class="instruction-text">Tap to place color. Swipe to guide the flow.</p>
+        </div>
+        
+        <div class="color-palette">
+            <div class="color-option active" style="background-color: #418fde;" data-color="#418fde"></div>
+            <div class="color-option" style="background-color: #de5f65;" data-color="#de5f65"></div>
+            <div class="color-option" style="background-color: #76c168;" data-color="#76c168"></div>
+            <div class="color-option" style="background-color: #e6b54c;" data-color="#e6b54c"></div>
+            <div class="color-option" style="background-color: #9b6ad8;" data-color="#9b6ad8"></div>
+        </div>
+    </div>
+    
+    <div class="breathing-guide">
+        <div class="breathing-circle"></div>
+    </div>
+    
+    <div class="level-indicator">
+        <p class="level-text">Level 1: First Flow</p>
+    </div>
+    
+    <div class="intro-screen">
+        <h1 class="intro-title">Flow State</h1>
+        <p class="intro-subtitle">A zen watercolor puzzle experience. Create beautiful patterns with water and color as you solve gentle puzzles.</p>
+        <button class="start-btn">Begin Your Journey</button>
+    </div>
+    
+    <div class="level-complete">
+        <h2 class="complete-title">Beautiful Creation</h2>
+        <div class="artwork">
+            <canvas id="artworkCanvas"></canvas>
+        </div>
+        <button class="next-btn">Continue to Next Flow</button>
+    </div>
+    
+    <div class="cursor-circle"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Canvas setup
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+            const artworkCanvas = document.getElementById('artworkCanvas');
+            const artCtx = artworkCanvas.getContext('2d');
+            
+            // UI Elements
+            const introScreen = document.querySelector('.intro-screen');
+            const startButton = document.querySelector('.start-btn');
+            const title = document.querySelector('.title');
+            const controlButtons = document.querySelectorAll('.control-btn');
+            const colorPalette = document.querySelector('.color-palette');
+            const colorOptions = document.querySelectorAll('.color-option');
+            const instructions = document.querySelector('.instructions');
+            const levelIndicator = document.querySelector('.level-indicator');
+            const breathingGuide = document.querySelector('.breathing-guide');
+            const cursorCircle = document.querySelector('.cursor-circle');
+            const levelComplete = document.querySelector('.level-complete');
+            const nextButton = document.querySelector('.next-btn');
+            const resetButton = document.getElementById('resetBtn');
+            const helpButton = document.getElementById('helpBtn');
+            
+            // Game parameters
+            let activeColor = '#418fde';
+            let currentLevel = 1;
+            let isPointerDown = false;
+            let lastPointerX = 0;
+            let lastPointerY = 0;
+            let particles = [];
+            let flows = [];
+            let goalAreas = [];
+            let completedGoals = 0;
+            let totalGoals = 0;
+            let isGameActive = false;
+            let canvasWidth, canvasHeight;
+            
+            // Resize canvas to full window size
+            function resizeCanvas() {
+                canvasWidth = window.innerWidth;
+                canvasHeight = window.innerHeight;
+                canvas.width = canvasWidth;
+                canvas.height = canvasHeight;
+                artworkCanvas.width = 300;
+                artworkCanvas.height = 300;
+            }
+            
+            // Initialize the game
+            function initGame() {
+                resizeCanvas();
+                setupEventListeners();
+                setupGameLevel(currentLevel);
+                animateBreathingGuide();
+                requestAnimationFrame(gameLoop);
+            }
+            
+            // Set up event listeners
+            function setupEventListeners() {
+                // Start button
+                startButton.addEventListener('click', startGame);
+                
+                // Next level button
+                nextButton.addEventListener('click', nextLevel);
+                
+                // Reset button
+                resetButton.addEventListener('click', resetLevel);
+                
+                // Help button
+                helpButton.addEventListener('click', toggleHelp);
+                
+                // Color selection
+                colorOptions.forEach(option => {
+                    option.addEventListener('click', function() {
+                        colorOptions.forEach(opt => opt.classList.remove('active'));
+                        this.classList.add('active');
+                        activeColor = this.getAttribute('data-color');
+                        cursorCircle.style.backgroundColor = activeColor;
+                    });
+                });
+                
+                // Touch/mouse events for the canvas
+                canvas.addEventListener('pointerdown', handlePointerDown);
+                canvas.addEventListener('pointermove', handlePointerMove);
+                canvas.addEventListener('pointerup', handlePointerUp);
+                canvas.addEventListener('pointerout', handlePointerUp);
+                
+                // Window resize
+                window.addEventListener('resize', resizeCanvas);
+                
+                // Mouse move for cursor circle
+                document.addEventListener('mousemove', function(e) {
+                    cursorCircle.style.left = `${e.clientX}px`;
+                    cursorCircle.style.top = `${e.clientY}px`;
+                });
+                
+                // Touch move for cursor circle
+                document.addEventListener('touchmove', function(e) {
+                    if (e.touches.length > 0) {
+                        cursorCircle.style.left = `${e.touches[0].clientX}px`;
+                        cursorCircle.style.top = `${e.touches[0].clientY}px`;
+                    }
+                });
+            }
+            
+            // Start the game
+            function startGame() {
+                introScreen.style.opacity = '0';
+                setTimeout(() => {
+                    introScreen.style.display = 'none';
+                    showGameUI();
+                    isGameActive = true;
+                }, 1000);
+            }
+            
+            // Show the game UI elements
+            function showGameUI() {
+                title.style.opacity = '1';
+                controlButtons.forEach(btn => btn.style.opacity = '1');
+                colorPalette.style.opacity = '1';
+                instructions.style.opacity = '1';
+                levelIndicator.style.opacity = '1';
+                
+                // Set cursor color
+                cursorCircle.style.backgroundColor = activeColor;
+            }
+            
+            // Set up a specific game level
+            function setupGameLevel(level) {
+                // Clear previous level
+                particles = [];
+                flows = [];
+                goalAreas = [];
+                completedGoals = 0;
+                
+                // Update level indicator
+                document.querySelector('.level-text').textContent = `Level ${level}: ${getLevelName(level)}`;
+                
+                // Set up goals based on level
+                switch(level) {
+                    case 1:
+                        // Simple level with one goal area
+                        goalAreas.push({
+                            x: canvasWidth * 0.7,
+                            y: canvasHeight * 0.5,
+                            radius: 80,
+                            color: 'rgba(65, 143, 222, 0.3)',
+                            targetColor: '#418fde',
+                            filled: 0,
+                            requiredFill: 70
+                        });
+                        totalGoals = 1;
+                        break;
+                    case 2:
+                        // Two goal areas with different colors
+                        goalAreas.push({
+                            x: canvasWidth * 0.3,
+                            y: canvasHeight * 0.3,
+                            radius: 70,
+                            color: 'rgba(222, 95, 101, 0.3)',
+                            targetColor: '#de5f65',
+                            filled: 0,
+                            requiredFill: 60
+                        });
+                        goalAreas.push({
+                            x: canvasWidth * 0.7,
+                            y: canvasHeight * 0.7,
+                            radius: 70,
+                            color: 'rgba(118, 193, 104, 0.3)',
+                            targetColor: '#76c168',
+                            filled: 0,
+                            requiredFill: 60
+                        });
+                        totalGoals = 2;
+                        break;
+                    case 3:
+                        // Three goal areas in a triangle pattern
+                        goalAreas.push({
+                            x: canvasWidth * 0.5,
+                            y: canvasHeight * 0.3,
+                            radius: 60,
+                            color: 'rgba(155, 106, 216, 0.3)',
+                            targetColor: '#9b6ad8',
+                            filled: 0,
+                            requiredFill: 50
+                        });
+                        goalAreas.push({
+                            x: canvasWidth * 0.3,
+                            y: canvasHeight * 0.7,
+                            radius: 60,
+                            color: 'rgba(230, 181, 76, 0.3)',
+                            targetColor: '#e6b54c',
+                            filled: 0,
+                            requiredFill: 50
+                        });
+                        goalAreas.push({
+                            x: canvasWidth * 0.7,
+                            y: canvasHeight * 0.7,
+                            radius: 60,
+                            color: 'rgba(65, 143, 222, 0.3)',
+                            targetColor: '#418fde',
+                            filled: 0,
+                            requiredFill: 50
+                        });
+                        totalGoals = 3;
+                        break;
+                    default:
+                        // Random generated levels for beyond level 3
+                        const numGoals = Math.min(level, 5);
+                        const colorOptions = ['#418fde', '#de5f65', '#76c168', '#e6b54c', '#9b6ad8'];
+                        
+                        for (let i = 0; i < numGoals; i++) {
+                            const color = colorOptions[i % colorOptions.length];
+                            const radius = Math.max(90 - (level * 5), 40);
+                            
+                            goalAreas.push({
+                                x: canvasWidth * (0.2 + (0.6 * Math.random())),
+                                y: canvasHeight * (0.2 + (0.6 * Math.random())),
+                                radius: radius,
+                                color: `${color}4D`, // 30% opacity version
+                                targetColor: color,
+                                filled: 0,
+                                requiredFill: Math.max(80 - (level * 5), 30)
+                            });
+                        }
+                        totalGoals = numGoals;
+                        break;
+                }
+                
+                // Clear the canvas for the new level
+                ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+            }
+            
+            // Reset the current level
+            function resetLevel() {
+                setupGameLevel(currentLevel);
+                
+                // Add subtle visual feedback
+                canvas.style.transition = 'filter 0.5s ease';
+                canvas.style.filter = 'brightness(1.2)';
+                setTimeout(() => {
+                    canvas.style.filter = 'brightness(1)';
+                }, 500);
+            }
+            
+            // Toggle help/instructions visibility
+            function toggleHelp() {
+                const currentOpacity = parseFloat(window.getComputedStyle(instructions).opacity);
+                
+                if (currentOpacity === 0) {
+                    instructions.style.opacity = '1';
+                    instructions.style.pointerEvents = 'auto';
+                    breathingGuide.style.opacity = '0.7';
+                } else {
+                    instructions.style.opacity = '0';
+                    instructions.style.pointerEvents = 'none';
+                    breathingGuide.style.opacity = '0';
+                }
+            }
+            
+            function showInstructions() {
+                document.getElementById('instructionsPanel').style.display = 'block';
+            }
+            
+            // Get level name based on level number
+            function getLevelName(level) {
+                const levelNames = [
+                    "First Flow",
+                    "Double Harmony",
+                    "Triangle Balance",
+                    "Four Corners",
+                    "Color Symphony",
+                    "Flowing River",
+                    "Mountain Stream",
+                    "Ocean Currents",
+                    "Forest Whispers",
+                    "Sky Dreams"
+                ];
+                
+                return levelNames[level - 1] || `Flow ${level}`;
+            }
+            
+            // Create the breathing animation guide
+            function animateBreathingGuide() {
+                // The breathing animation is handled by CSS
+            }
+            
+            // Handle pointer down event (tap/click)
+            function handlePointerDown(e) {
+                if (!isGameActive) return;
+                
+                isPointerDown = true;
+                const rect = canvas.getBoundingClientRect();
+                lastPointerX = (e.clientX || e.touches[0].clientX) - rect.left;
+                lastPointerY = (e.clientY || e.touches[0].clientY) - rect.top;
+                
+                // Create a source of color
+                createColorSource(lastPointerX, lastPointerY, activeColor);
+                
+                // Make cursor larger when pressed
+                cursorCircle.style.width = '30px';
+                cursorCircle.style.height = '30px';
+            }
+            
+            // Handle pointer move event (swipe/drag)
+            function handlePointerMove(e) {
+                if (!isGameActive) return;
+                
+                const rect = canvas.getBoundingClientRect();
+                const currentX = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+                const currentY = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
+                
+                // Update cursor position
+                cursorCircle.style.left = `${(e.clientX || (e.touches && e.touches[0].clientX))}px`;
+                cursorCircle.style.top = `${(e.clientY || (e.touches && e.touches[0].clientY))}px`;
+                
+                if (isPointerDown) {
+                    // Create flow points along the swipe path
+                    createFlowPoint(lastPointerX, lastPointerY, currentX, currentY);
+                    
+                    // Update position for next move
+                    lastPointerX = currentX;
+                    lastPointerY = currentY;
+                }
+            }
+            
+            // Handle pointer up event (release)
+            function handlePointerUp() {
+                isPointerDown = false;
+                
+                // Return cursor to normal size
+                cursorCircle.style.width = '20px';
+                cursorCircle.style.height = '20px';
+            }
+            
+            // Create a source of color particles
+            function createColorSource(x, y, color) {
+                const source = {
+                    x: x,
+                    y: y,
+                    color: color,
+                    strength: 100,
+                    lastEmit: 0
+                };
+                
+                // Create initial burst of particles
+                for (let i = 0; i < 20; i++) {
+                    createParticle(x, y, color);
+                }
+                
+                // Add to particles sources
+                particles.push(source);
+            }
+            
+            // Create a flow direction point
+            function createFlowPoint(x1, y1, x2, y2) {
+                const dx = x2 - x1;
+                const dy = y2 - y1;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                // Create flow points along the path
+                const numPoints = Math.max(1, Math.floor(distance / 10));
+                for (let i = 0; i < numPoints; i++) {
+                    const ratio = i / numPoints;
+                    const x = x1 + dx * ratio;
+                    const y = y1 + dy * ratio;
+                    
+                    flows.push({
+                        x: x,
+                        y: y,
+                        dirX: dx / distance,
+                        dirY: dy / distance,
+                        strength: 2,
+                        radius: 40,
+                        life: 100
+                    });
+                }
+            }
+            
+            // Create an individual color particle
+            function createParticle(x, y, color, velocityX = 0, velocityY = 0) {
+                const variance = 2;
+                const particle = {
+                    x: x,
+                    y: y,
+                    size: 3 + Math.random() * 5,
+                    color: color,
+                    alpha: 0.7 + Math.random() * 0.3,
+                    velocityX: velocityX + (Math.random() * variance * 2 - variance),
+                    velocityY: velocityY + (Math.random() * variance * 2 - variance),
+                    life: 200 + Math.random() * 100,
+                    decay: 0.94 + Math.random() * 0.05
+                };
+                
+                particles.push(particle);
+                return particle;
+            }
+            
+            // Update all game objects
+            function updateGameObjects() {
+                // Update particles
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    
+                    // Check if it's a particle or a source
+                    if (p.velocityX !== undefined) {
+                        // It's a particle
+                        p.life--;
+                        
+                        // Apply flow forces
+                        for (const flow of flows) {
+                            const dx = p.x - flow.x;
+                            const dy = p.y - flow.y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            
+                            if (distance < flow.radius) {
+                                const force = (1 - distance / flow.radius) * flow.strength;
+                                p.velocityX += flow.dirX * force;
+                                p.velocityY += flow.dirY * force;
+                            }
+                        }
+                        
+                        // Apply velocity with decay
+                        p.velocityX *= p.decay;
+                        p.velocityY *= p.decay;
+                        
+                        p.x += p.velocityX;
+                        p.y += p.velocityY;
+                        
+                        // Check if the particle is in a goal area
+                        for (const goal of goalAreas) {
+                            const dx = p.x - goal.x;
+                            const dy = p.y - goal.y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            
+                            if (distance < goal.radius && p.color === goal.targetColor) {
+                                // Count this particle towards filling the goal
+                                goal.filled += (p.size / 50); // Weight by particle size
+                            }
+                        }
+                        
+                        // Remove dead particles
+                        if (p.life <= 0) {
+                            particles.splice(i, 1);
+                        }
+                    } else {
+                        // It's a source - emit particles
+                        p.strength -= 0.5;
+                        
+                        if (p.strength > 0 && performance.now() - p.lastEmit > 100) {
+                            p.lastEmit = performance.now();
+                            
+                            // Emit 3 particles in random directions
+                            for (let j = 0; j < 3; j++) {
+                                createParticle(
+                                    p.x + (Math.random() * 10 - 5),
+                                    p.y + (Math.random() * 10 - 5),
+                                    p.color
+                                );
+                            }
+                        }
+                        
+                        // Remove depleted sources
+                        if (p.strength <= 0) {
+                            particles.splice(i, 1);
+                        }
+                    }
+                }
+                
+                // Update flows
+                for (let i = flows.length - 1; i >= 0; i--) {
+                    flows[i].life--;
+                    if (flows[i].life <= 0) {
+                        flows.splice(i, 1);
+                    }
+                }
+                
+                // Check goal completion
+                checkGoalCompletion();
+            }
+            
+            // Check if the level goals are completed
+            function checkGoalCompletion() {
+                completedGoals = 0;
+                
+                for (const goal of goalAreas) {
+                    if (goal.filled >= goal.requiredFill) {
+                        completedGoals++;
+                    }
+                }
+                
+                // If all goals are complete, end the level
+                if (completedGoals >= totalGoals && totalGoals > 0) {
+                    completeLevel();
+                }
+            }
+            
+            // Handle level completion
+            function completeLevel() {
+                isGameActive = false;
+                
+                // Capture the artwork
+                captureArtwork();
+                
+                // Show level complete screen
+                levelComplete.style.opacity = '1';
+                levelComplete.style.pointerEvents = 'auto';
+            }
+            
+            // Go to the next level
+            function nextLevel() {
+                currentLevel++;
+                
+                // Hide level complete screen
+                levelComplete.style.opacity = '0';
+                levelComplete.style.pointerEvents = 'none';
+                
+                // Set up the next level
+                setupGameLevel(currentLevel);
+                
+                // Resume the game
+                isGameActive = true;
+            }
+            
+            // Capture the current canvas state as artwork
+            function captureArtwork() {
+                // Clear artwork canvas
+                artCtx.clearRect(0, 0, artworkCanvas.width, artworkCanvas.height);
+                
+                // Draw a paper-like background
+                artCtx.fillStyle = '#f9f7f1';
+                artCtx.fillRect(0, 0, artworkCanvas.width, artworkCanvas.height);
+                
+                // Scale and copy from the main canvas
+                const scaleFactor = Math.min(
+                    artworkCanvas.width / canvasWidth,
+                    artworkCanvas.height / canvasHeight
+                );
+                
+                const srcWidth = artworkCanvas.width / scaleFactor;
+                const srcHeight = artworkCanvas.height / scaleFactor;
+                const srcX = (canvasWidth - srcWidth) / 2;
+                const srcY = (canvasHeight - srcHeight) / 2;
+                
+                artCtx.drawImage(
+                    canvas,
+                    srcX, srcY, srcWidth, srcHeight,
+                    0, 0, artworkCanvas.width, artworkCanvas.height
+                );
+                
+                // Add a subtle frame
+                artCtx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+                artCtx.lineWidth = 4;
+                artCtx.strokeRect(2, 2, artworkCanvas.width - 4, artworkCanvas.height - 4);
+            }
+            
+            // Main game rendering function
+            function renderGame() {
+                // No need to clear the entire canvas each frame for watercolor effect
+                // Instead, apply a fading effect to create persistence
+                ctx.fillStyle = 'rgba(249, 247, 241, 0.03)';
+                ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+                
+                // Render goal areas
+                for (const goal of goalAreas) {
+                    // Draw goal area
+                    const gradient = ctx.createRadialGradient(
+                        goal.x, goal.y, 0,
+                        goal.x, goal.y, goal.radius
+                    );
+                    gradient.addColorStop(0, goal.color);
+                    gradient.addColorStop(1, 'rgba(249, 247, 241, 0)');
+                    
+                    ctx.beginPath();
+                    ctx.arc(goal.x, goal.y, goal.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
+                    
+                    // Draw fill progress indicator
+                    const fillRatio = Math.min(1, goal.filled / goal.requiredFill);
+                    const progressRadius = 5;
+                    const progressAngle = fillRatio * Math.PI * 2;
+                    
+                    ctx.beginPath();
+                    ctx.arc(goal.x, goal.y, goal.radius + 10, 0, progressAngle);
+                    ctx.strokeStyle = goal.targetColor;
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                }
+                
+                // Render flow direction indicators
+                for (const flow of flows) {
+                    const alpha = flow.life / 100;
+                    ctx.beginPath();
+                    ctx.arc(flow.x, flow.y, 5, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.3})`;
+                    ctx.fill();
+                }
+                
+                // Render particles
+                for (const p of particles) {
+                    // Skip rendering sources
+                    if (p.velocityX === undefined) continue;
+                    
+                    const alpha = (p.life / 300) * p.alpha;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    
+                    // Create a radial gradient for each particle
+                    const gradient = ctx.createRadialGradient(
+                        p.x, p.y, 0,
+                        p.x, p.y, p.size
+                    );
+                    gradient.addColorStop(0, `${p.color}`);
+                    gradient.addColorStop(1, `${p.color}00`);
+                    
+                    ctx.fillStyle = gradient;
+                    ctx.globalAlpha = alpha;
+                    ctx.fill();
+                    ctx.globalAlpha = 1;
+                }
+            }
+            
+            // Main game loop
+            function gameLoop() {
+                if (isGameActive) {
+                    updateGameObjects();
+                }
+                
+                renderGame();
+                requestAnimationFrame(gameLoop);
+            }
+            
+            // Initialize the game
+            initGame();
+            
+            // Show instructions on first load
+            setTimeout(() => {
+                document.getElementById('instructionsPanel').style.display = 'block';
+            }, 500);
+        });
+    </script>
+</body>
+</html>

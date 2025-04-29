@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>button</title>
+<style>
+body {
+  background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 50%, #ff758c 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.1);
+  color: #333;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  z-index: 10;
+}
+
+.back-button:hover {
+  background: rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+/* From Uiverse.io by cssbuttons-io */ 
+button {
+  padding: 1.3em 3em;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+}
+
+button:hover {
+  background-color: #23c483;
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+button:active {
+  transform: translateY(-1px);
+}
+/* Antistress Button Styling */
+.antistress-btn {
+  padding: 1.5em 3.5em;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(90deg, #43c6ac 0%, #f8ffae 100%);
+  border: none;
+  border-radius: 60px;
+  box-shadow: 0px 8px 25px rgba(67, 198, 172, 0.25), 0 2px 8px #43c6ac33;
+  transition: background 0.22s, color 0.18s, border 0.18s, transform 0.1s, box-shadow 0.18s;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.antistress-btn .ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-effect 0.6s linear;
+  background: rgba(255,255,255,0.6);
+  pointer-events: none;
+}
+
+@keyframes ripple-effect {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.antistress-btn:active {
+  background: linear-gradient(90deg, #f8ffae 0%, #43c6ac 100%);
+  color: #43c6ac;
+  box-shadow: 0 2px 8px #43c6ac88, 0 0 40px #f8ffae88;
+  transform: scale(0.97);
+}
+
+.antistress-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px #43c6ac44;
+}
+
+.antistress-btn.bounce {
+  animation: bounce-release 0.45s cubic-bezier(0.4,0.1,0.2,1);
+}
+
+@keyframes bounce-release {
+  0% { transform: scale(0.97); }
+  40% { transform: scale(1.08); }
+  70% { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+
+.antistress-btn::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  background: radial-gradient(circle at 60% 40%, #f8ffae55 0%, #43c6ac33 100%);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+
+.antistress-btn:hover::before {
+  opacity: 1;
+}
+
+.antistress-btn span {
+  position: relative;
+  z-index: 1;
+  font-size: 1.15em;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+</style>
+</head>
+<body>
+  <a href="index.html" class="back-button">← Back to Home</a>
+<!-- From Uiverse.io by cssbuttons-io --> 
+<button class="antistress-btn" id="antistressBtn"><span>AntiStress</span></button>
+<script>
+// Ripple effect
+const btn = document.getElementById('antistressBtn');
+btn.addEventListener('mousedown', function(e) {
+  const circle = document.createElement('span');
+  circle.classList.add('ripple');
+  const rect = btn.getBoundingClientRect();
+  circle.style.width = circle.style.height = Math.max(rect.width, rect.height) + 'px';
+  circle.style.left = (e.clientX - rect.left - rect.width/2) + 'px';
+  circle.style.top = (e.clientY - rect.top - rect.height/2) + 'px';
+  btn.appendChild(circle);
+  setTimeout(() => circle.remove(), 600);
+});
+
+// Bounce effect on release
+btn.addEventListener('mouseup', function() {
+  btn.classList.remove('bounce');
+  void btn.offsetWidth; // trigger reflow
+  btn.classList.add('bounce');
+});
+btn.addEventListener('mouseleave', function() {
+  btn.classList.remove('bounce');
+});
+// Built-in soft click sound using Web Audio API
+btn.addEventListener('mousedown', () => {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = 'sine';
+    o.frequency.value = 420; // soft pop/click
+    g.gain.value = 0.45;
+    o.connect(g);
+    g.connect(ctx.destination);
+    o.start();
+    g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.15);
+    o.stop(ctx.currentTime + 0.15);
+    o.onended = () => ctx.close();
+  } catch(e) { /* fail silently */ }
+});
+</script>
+</body>
+</html>
